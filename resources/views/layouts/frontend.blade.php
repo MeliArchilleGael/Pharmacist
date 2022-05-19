@@ -52,7 +52,7 @@
             <div class="d-flex align-items-center justify-content-between">
                 <div class="logo">
                     <div class="site-logo">
-                        <a href="index.html" class="js-logo-clone">ONLINE Pharma</a>
+                        <a href="{{ route('home') }}" class="js-logo-clone">ONLINE Pharma</a>
                     </div>
                 </div>
                 <div class="main-nav d-none d-lg-block ">
@@ -74,12 +74,12 @@
                 </div>
                 <div class="icons">
                     <a href="#" class="icons-btn d-inline-block js-search-open"><span class="icon-search"></span></a>
-                    <a href="cart.html" class="icons-btn d-inline-block bag">
+                    <a href="{{ route('cart') }}" class="icons-btn d-inline-block bag">
                         <span class="icon-shopping-bag"></span>
                         <span class="number">2</span>
                     </a>
-                    <a href="#" class="site-menu-toggle js-menu-toggle ml-3 d-inline-block d-lg-none"><span
-                            class="icon-menu"></span></a>
+                    <a href="#" class="site-menu-toggle js-menu-toggle ml-3 d-inline-block d-lg-none">
+                        <span class="icon-menu"></span></a>
                 </div>
             </div>
         </div>

@@ -8,20 +8,39 @@ class FrontendController extends Controller
 {
     //
 
-    public function index(){
+    public function index()
+    {
         return view('frontend.index');
     }
 
-    public function shop(){
+    public function shop()
+    {
         return view('frontend.shop');
     }
 
-    public function about(){
+    public function about()
+    {
         return view('frontend.about');
     }
 
-    public function contact(){
+    public function contact()
+    {
         return view('frontend.contact');
+    }
+
+    public function cart()
+    {
+        return view('frontend.cart');
+    }
+
+    public function checkout()
+    {
+        return view('frontend.checkout');
+    }
+
+    public function thanks()
+    {
+        return view('frontend.thanks');
     }
 
 }

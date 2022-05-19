@@ -17,6 +17,9 @@ Route::get('/', [\App\Http\Controllers\FrontendController::class, 'index'])->nam
 Route::get('shop', [\App\Http\Controllers\FrontendController::class, 'shop'])->name('shop');
 Route::get('about', [\App\Http\Controllers\FrontendController::class, 'about'])->name('about');
 Route::get('contact', [\App\Http\Controllers\FrontendController::class, 'contact'])->name('contact');
+Route::get('cart', [\App\Http\Controllers\FrontendController::class, 'cart'])->name('cart');
+Route::get('checkout', [\App\Http\Controllers\FrontendController::class, 'checkout'])->name('checkout');
+Route::get('thanks', [\App\Http\Controllers\FrontendController::class, 'thanks'])->name('thanks');
 
 Auth::routes();
 
