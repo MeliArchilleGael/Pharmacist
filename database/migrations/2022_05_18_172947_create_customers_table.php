@@ -21,8 +21,7 @@ class CreateCustomersTable extends Migration
             $table->string('password');
             $table->string('telephone');
             $table->string('address');
-            $table->string('status');
-            $table->unsignedBigInteger('address_id');
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

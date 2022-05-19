@@ -13,10 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [\App\Http\Controllers\FrontendController::class, 'index'])->name('home');
+Route::get('shop', [\App\Http\Controllers\FrontendController::class, 'shop'])->name('shop');
+Route::get('about', [\App\Http\Controllers\FrontendController::class, 'about'])->name('about');
+Route::get('contact', [\App\Http\Controllers\FrontendController::class, 'contact'])->name('contact');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
