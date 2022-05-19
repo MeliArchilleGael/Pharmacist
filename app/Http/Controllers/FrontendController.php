@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Drugs;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -15,7 +16,20 @@ class FrontendController extends Controller
 
     public function shop()
     {
-        return view('frontend.shop');
+        $drugs = Drugs::latest()->get();
+        return view('frontend.shop', compact('drugs'));
+    }
+
+    public function show($slug)
+    {
+        $drug = Drugs::where('slug', $slug)->firstOrFail();
+        return view('frontend.show', compact('drug'));
+    }
+
+    public function add_cart(Request $request)
+    {
+        $drug = Drugs::where('slug', $slug)->firstOrFail();
+        return view('frontend.show', compact('drug'));
     }
 
     public function about()

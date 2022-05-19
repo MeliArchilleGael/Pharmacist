@@ -36,18 +36,18 @@
             </div>
 
             <div class="row mt-5 justify-content-center">
-                <div class="col-sm-6 col-lg-4 text-center item mb-4">
-                    <span class="tag">Sale</span>
-                    <a href="shop-single.html"> <img src="images/product_01.png" alt="Image"></a>
-                    <h3 class="text-dark"><a href="shop-single.html">Bioderma</a></h3>
-                    <p class="price"><del>95.00</del> &mdash; $55.00</p>
-                </div>
-
-                <div class="col-sm-6 col-lg-4 text-center item mb-4">
-                    <a href="shop-single.html"> <img src="images/product_02.png" alt="Image"></a>
-                    <h3 class="text-dark"><a href="shop-single.html">Chanca Piedra</a></h3>
-                    <p class="price">$70.00</p>
-                </div>
+                @foreach($drugs as $drug)
+                    <div class="col-sm-6 col-lg-4 h-25 text-center item mb-4">
+                        <span class="tag">{{ $drug->status }}</span>
+                        <a href="{{ route('shop.show', $drug->slug) }}">
+                            <img src="{{ asset(''.$drug->image) }}" alt="Image">
+                        </a>
+                        <h3 class="text-dark">
+                            <a href="{{ route('shop.show', $drug->slug) }}">{{ $drug->name }}</a>
+                        </h3>
+                        <p class="price"><del>{{ number_format($drug->price + ($drug->price/2)) }} XFA </del> &mdash; {{ number_format($drug->price) }} XFA</p>
+                    </div>
+                @endforeach
 
             </div>
             <div class="row mt-5">
