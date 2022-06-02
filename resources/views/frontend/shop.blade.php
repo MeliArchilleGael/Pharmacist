@@ -12,7 +12,7 @@
     <div class="site-section">
         <div class="container">
 
-            <div class="row">
+          {{--  <div class="row">
                 <div class="col-lg-6">
                     <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter by Price</h3>
                     <div id="slider-range" class="border-primary"></div>
@@ -33,7 +33,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="row mt-5 justify-content-center">
                 @foreach($drugs as $drug)

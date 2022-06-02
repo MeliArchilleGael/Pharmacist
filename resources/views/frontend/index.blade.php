@@ -54,45 +54,24 @@
             </div>
 
             <div class="row">
-                <div class="col-sm-6 col-lg-4 text-center item mb-4">
-                    <span class="tag">Sale</span>
-                    <a href="shop-single.html"> <img src="images/product_01.png" alt="Image"></a>
-                    <h3 class="text-dark"><a href="shop-single.html">Bioderma</a></h3>
-                    <p class="price"><del>95.00</del> &mdash; $55.00</p>
-                </div>
-                <div class="col-sm-6 col-lg-4 text-center item mb-4">
-                    <a href="shop-single.html"> <img src="images/product_02.png" alt="Image"></a>
-                    <h3 class="text-dark"><a href="shop-single.html">Chanca Piedra</a></h3>
-                    <p class="price">$70.00</p>
-                </div>
-                <div class="col-sm-6 col-lg-4 text-center item mb-4">
-                    <a href="shop-single.html"> <img src="images/product_03.png" alt="Image"></a>
-                    <h3 class="text-dark"><a href="shop-single.html">Umcka Cold Care</a></h3>
-                    <p class="price">$120.00</p>
-                </div>
+                @foreach($drugs as $drug)
+                    <div class="col-sm-6 col-lg-4 text-center item mb-4">
+                        <span class="tag">{{ $drug->status }}</span>
+                        <a href="{{ route('shop.show', $drug->slug) }}">
+                            <img src="{{ asset(''.$drug->image) }}" alt="Image">
+                        </a>
+                        <h3 class="text-dark">
+                            <a href="{{ route('shop.show', $drug->slug) }}">{{ $drug->name }}</a>
+                        </h3>
+                        <p class="price"><del>{{ number_format($drug->price + ($drug->price/2)) }} XFA </del> &mdash; {{ number_format($drug->price) }} XFA</p>
+                    </div>
+                @endforeach
 
-                <div class="col-sm-6 col-lg-4 text-center item mb-4">
-
-                    <a href="shop-single.html"> <img src="images/product_04.png" alt="Image"></a>
-                    <h3 class="text-dark"><a href="shop-single.html">Cetyl Pure</a></h3>
-                    <p class="price"><del>45.00</del> &mdash; $20.00</p>
-                </div>
-                <div class="col-sm-6 col-lg-4 text-center item mb-4">
-                    <a href="shop-single.html"> <img src="images/product_05.png" alt="Image"></a>
-                    <h3 class="text-dark"><a href="shop-single.html">CLA Core</a></h3>
-                    <p class="price">$38.00</p>
-                </div>
-                <div class="col-sm-6 col-lg-4 text-center item mb-4">
-                    <span class="tag">Sale</span>
-                    <a href="shop-single.html"> <img src="images/product_06.png" alt="Image"></a>
-                    <h3 class="text-dark"><a href="shop-single.html">Poo Pourri</a></h3>
-                    <p class="price"><del>$89</del> &mdash; $38.00</p>
-                </div>
             </div>
 
             <div class="row mt-5">
                 <div class="col-12 text-center">
-                    <a href="shop.html" class="btn btn-primary px-4 py-3">View All Products</a>
+                    <a href="{{ route('shop') }}" class="btn btn-primary px-4 py-3">View All Products</a>
                 </div>
             </div>
         </div>
@@ -109,95 +88,23 @@
             <div class="row">
                 <div class="col-md-12 block-3 products-wrap">
                     <div class="nonloop-block-3 owl-carousel">
-
-                        <div class="text-center item mb-4">
-                            <a href="shop-single.html"> <img src="images/product_03.png" alt="Image"></a>
-                            <h3 class="text-dark"><a href="shop-single.html">Umcka Cold Care</a></h3>
-                            <p class="price">$120.00</p>
-                        </div>
-
-                        <div class="text-center item mb-4">
-                            <a href="shop-single.html"> <img src="images/product_01.png" alt="Image"></a>
-                            <h3 class="text-dark"><a href="shop-single.html">Umcka Cold Care</a></h3>
-                            <p class="price">$120.00</p>
-                        </div>
-
-                        <div class="text-center item mb-4">
-                            <a href="shop-single.html"> <img src="images/product_02.png" alt="Image"></a>
-                            <h3 class="text-dark"><a href="shop-single.html">Umcka Cold Care</a></h3>
-                            <p class="price">$120.00</p>
-                        </div>
-
-                        <div class="text-center item mb-4">
-                            <a href="shop-single.html"> <img src="images/product_04.png" alt="Image"></a>
-                            <h3 class="text-dark"><a href="shop-single.html">Umcka Cold Care</a></h3>
-                            <p class="price">$120.00</p>
-                        </div>
-
+                        @foreach($newDrugs as $newDrug)
+                            <div class="text-center item mb-4">
+                                <a href="{{ route('shop.show', $newDrug->slug) }}">
+                                    <img src="{{ asset(''.$newDrug->image) }}" alt="Image">
+                                </a>
+                                <h3 class="text-dark">
+                                    <a href="{{ route('shop.show', $newDrug->slug) }}">{{ $newDrug->name }}</a>
+                                </h3>
+                                <p class="price">{{ number_format($drug->price) }} XFA</p>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="site-section">
-        <div class="container">
-            <div class="row">
-                <div class="title-section text-center col-12">
-                    <h2 class="text-uppercase">Testimonials</h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 block-3 products-wrap">
-                    <div class="nonloop-block-3 no-direction owl-carousel">
-
-                        <div class="testimony">
-                            <blockquote>
-                                <img src="images/person_1.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
-                                <p>&ldquo;Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis voluptatem consectetur quam tempore obcaecati maiores voluptate aspernatur iusto eveniet, placeat ab quod tenetur ducimus. Minus ratione sit quaerat unde.&rdquo;</p>
-                            </blockquote>
-
-                            <p>&mdash; Kelly Holmes</p>
-                        </div>
-
-                        <div class="testimony">
-                            <blockquote>
-                                <img src="images/person_2.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
-                                <p>&ldquo;Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis voluptatem consectetur quam tempore
-                                    obcaecati maiores voluptate aspernatur iusto eveniet, placeat ab quod tenetur ducimus. Minus ratione sit quaerat
-                                    unde.&rdquo;</p>
-                            </blockquote>
-
-                            <p>&mdash; Rebecca Morando</p>
-                        </div>
-
-                        <div class="testimony">
-                            <blockquote>
-                                <img src="images/person_3.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
-                                <p>&ldquo;Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis voluptatem consectetur quam tempore
-                                    obcaecati maiores voluptate aspernatur iusto eveniet, placeat ab quod tenetur ducimus. Minus ratione sit quaerat
-                                    unde.&rdquo;</p>
-                            </blockquote>
-
-                            <p>&mdash; Lucas Gallone</p>
-                        </div>
-
-                        <div class="testimony">
-                            <blockquote>
-                                <img src="images/person_4.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
-                                <p>&ldquo;Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo omnis voluptatem consectetur quam tempore
-                                    obcaecati maiores voluptate aspernatur iusto eveniet, placeat ab quod tenetur ducimus. Minus ratione sit quaerat
-                                    unde.&rdquo;</p>
-                            </blockquote>
-
-                            <p>&mdash; Andrew Neel</p>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="site-section bg-secondary bg-image" style="background-image: url('frontend/images/bg_2.jpg');">
         <div class="container">

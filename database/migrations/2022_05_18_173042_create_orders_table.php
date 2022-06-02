@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $table->string('drug_id');
             $table->integer('quantity');
             $table->integer('command_id');
+            $table->integer('price');
             $table->timestamps();
         });
     }

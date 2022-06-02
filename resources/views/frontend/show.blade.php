@@ -30,7 +30,7 @@
                         <strong class="text-primary h4">{{ number_format($drug->price) }}</strong></p>
 
 
-                    <form action="{{ route('shop.add_cart') }}" method="post">
+                    <form action="{{ route('add_to_cart',$drug->slug) }}" method="post">
                         @csrf
                         <div class="mb-5">
                             <div class="input-group mb-3" style="max-width: 220px;">

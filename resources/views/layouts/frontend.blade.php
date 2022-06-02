@@ -58,17 +58,21 @@
                 <div class="main-nav d-none d-lg-block ">
                     <nav class="site-navigation text-right text-md-center" role="navigation">
                         <ul class="site-menu js-clone-nav d-none d-lg-block">
-                            <li class="active"><a href="{{ route('home') }}">Home</a></li>
-                            <li><a href="{{ route('shop') }}">Store</a></li>
-                             <li class="has-children">
+                            <li class="Str::endsWith(Route::currentRouteName(), 'home') ? 'active':''"><a
+                                    href="{{ route('home') }}">Home</a></li>
+                            <li class="{{ Str::endsWith(Route::currentRouteName(), 'shop') ? 'active':'' }}"><a
+                                    href="{{ route('shop') }}">Store</a></li>
+                            <li class=" {{ Str::endsWith(Route::currentRouteName(), 'login') ? 'active':'' }} has-children">
                                 <a href="#">Full Access </a>
                                 <ul class="dropdown">
                                     <li><a href="{{ route('login') }}">Login</a></li>
                                     <li><a href="{{ route('register') }}">Register</a></li>
                                 </ul>
                             </li>
-                            <li><a href="{{ route('about') }}">About</a></li>
-                            <li><a href="{{ route('contact') }}">Contact</a></li>
+                            <li class="{{ Str::endsWith(Route::currentRouteName(), 'about') ? 'active':'' }}"><a
+                                    href="{{ route('about') }}">About</a></li>
+                            <li class="{{ Str::endsWith(Route::currentRouteName(), 'contact') ? 'active':'' }}"><a
+                                    href="{{ route('contact') }}">Contact</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -76,7 +80,12 @@
                     <a href="#" class="icons-btn d-inline-block js-search-open"><span class="icon-search"></span></a>
                     <a href="{{ route('cart') }}" class="icons-btn d-inline-block bag">
                         <span class="icon-shopping-bag"></span>
-                        <span class="number">2</span>
+                        <span class="number">
+                            @if(session('cart') !== null)
+                                {{ count(session('cart')) }}
+                            @else
+                                0
+                            @endif</span>
                     </a>
                     <a href="#" class="site-menu-toggle js-menu-toggle ml-3 d-inline-block d-lg-none">
                         <span class="icon-menu"></span></a>
@@ -123,7 +132,8 @@
                 <div class="col-md-12">
                     <p>
                         Copyright &copy;
-                        <script>document.write(new Date().getFullYear());</script> All rights reserved
+                        <script>document.write(new Date().getFullYear());</script>
+                        All rights reserved
                     </p>
                 </div>
 

@@ -29,55 +29,50 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="product-thumbnail">
-                                    <img src="images/product_02.png" alt="Image" class="img-fluid">
-                                </td>
-                                <td class="product-name">
-                                    <h2 class="h5 text-black">Ibuprofen</h2>
-                                </td>
-                                <td>$55.00</td>
-                                <td>
-                                    <div class="input-group mb-3" style="max-width: 120px;">
-                                        <div class="input-group-prepend">
-                                            <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
-                                        </div>
-                                        <input type="text" class="form-control text-center" value="1" placeholder=""
-                                               aria-label="Example text with button addon" aria-describedby="button-addon1">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
-                                        </div>
-                                    </div>
+                            <?php $Total_price = 0; ?>
+                            @if(session()->has('cart'))
 
-                                </td>
-                                <td>$49.00</td>
-                                <td><a href="#" class="btn btn-primary height-auto btn-sm">X</a></td>
-                            </tr>
+                                @foreach(session()->get('cart') as $item)
+                                    <?php
+                                    $Total_price = $Total_price + ($item['quantity'] * $item['drug']->price);
+                                    $price = $item['drug']->price * $item['quantity'];
+                                    ?>
 
-                            <tr>
-                                <td class="product-thumbnail">
-                                    <img src="images/product_01.png" alt="Image" class="img-fluid">
-                                </td>
-                                <td class="product-name">
-                                    <h2 class="h5 text-black">Bioderma</h2>
-                                </td>
-                                <td>$49.00</td>
-                                <td>
-                                    <div class="input-group mb-3" style="max-width: 120px;">
-                                        <div class="input-group-prepend">
-                                            <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
-                                        </div>
-                                        <input type="text" class="form-control text-center" value="1" placeholder=""
-                                               aria-label="Example text with button addon" aria-describedby="button-addon1">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
-                                        </div>
-                                    </div>
+                                    <tr>
+                                        <td class="product-thumbnail">
+                                            <img src="{{ asset(''.$item['drug']->image) }}" alt="Image"
+                                                 class="img-fluid">
+                                        </td>
+                                        <td class="product-name">
+                                            <h2 class="h5 text-black">{{ $item['drug']->name }}</h2>
+                                        </td>
+                                        <td>{{ number_format($item['drug']->price) }}</td>
+                                        <td>
+                                            <div class="input-group mb-3" style="max-width: 120px;">
+                                                <div class="input-group-prepend">
+                                                    <button class="btn btn-outline-primary js-btn-minus" type="button">
+                                                        &minus;
+                                                    </button>
+                                                </div>
+                                                <input type="text" class="form-control text-center" value="{{ $item['quantity'] }}"
+                                                       placeholder=""
+                                                       aria-label="Example text with button addon"
+                                                       aria-describedby="button-addon1">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-primary js-btn-plus" type="button">
+                                                        &plus;
+                                                    </button>
+                                                </div>
+                                            </div>
 
-                                </td>
-                                <td>$49.00</td>
-                                <td><a href="#" class="btn btn-primary height-auto btn-sm">X</a></td>
-                            </tr>
+                                        </td>
+                                        <td>{{ $price }}</td>
+                                        <td><a href="{{ route('remove_from_cart',$item['drug']->slug) }}"
+                                               class="btn btn-primary height-auto btn-sm">X</a></td>
+                                    </tr>
+                                @endforeach
+                            @endif
+
                             </tbody>
                         </table>
                     </div>
@@ -85,28 +80,6 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6">
-                    <div class="row mb-5">
-                        <div class="col-md-6 mb-3 mb-md-0">
-                            <button class="btn btn-primary btn-md btn-block">Update Cart</button>
-                        </div>
-                        <div class="col-md-6">
-                            <button class="btn btn-outline-primary btn-md btn-block">Continue Shopping</button>
-                        </div>
-                    </div>
-                    {{--<div class="row">
-                        <div class="col-md-12">
-                            <label class="text-black h4" for="coupon">Coupon</label>
-                            <p>Enter your coupon code if you have one.</p>
-                        </div>
-                        <div class="col-md-8 mb-3 mb-md-0">
-                            <input type="text" class="form-control py-3" id="coupon" placeholder="Coupon Code">
-                        </div>
-                        <div class="col-md-4">
-                            <button class="btn btn-primary btn-md px-4">Apply Coupon</button>
-                        </div>
-                    </div>--}}
-                </div>
                 <div class="col-md-6 pl-5">
                     <div class="row justify-content-end">
                         <div class="col-md-7">
@@ -115,27 +88,29 @@
                                     <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
                                 </div>
                             </div>
-                            <div class="row mb-3">
+                            {{--<div class="row mb-3">
                                 <div class="col-md-6">
                                     <span class="text-black">Subtotal</span>
                                 </div>
                                 <div class="col-md-6 text-right">
                                     <strong class="text-black">$230.00</strong>
                                 </div>
-                            </div>
+                            </div>--}}
                             <div class="row mb-5">
                                 <div class="col-md-6">
                                     <span class="text-black">Total</span>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    <strong class="text-black">$230.00</strong>
+                                    <strong class="text-black">{{ number_format($Total_price) }} XFA</strong>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button class="btn btn-primary btn-lg btn-block" onclick="window.location='{{ route('checkout') }}'">Proceed To
-                                        Checkout</button>
+                                    <button class="btn btn-primary btn-lg btn-block"
+                                            onclick="window.location='{{ route('checkout') }}'">
+                                        Proceed To Checkout
+                                    </button>
                                 </div>
                             </div>
                         </div>
