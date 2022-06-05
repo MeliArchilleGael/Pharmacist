@@ -41,19 +41,5 @@ class UserSeed extends Seeder
             'address' => 'Bamenda',
         ]);
 
-        Customer::create([
-            'name' => 'Customer 1',
-            'email' => 'customer1@pharma.com',
-            'password' => Hash::make('password'),
-            'telephone' => '+237 689 451 895',
-            'address' => 'Bamenda',
-        ]);
-        Customer::create([
-            'name' => 'Customer 2',
-            'email' => 'customer2@pharma.com',
-            'password' => Hash::make('password'),
-            'telephone' => '+237 678 451 481',
-            'address' => 'Bamenda',
-        ]);
     }
 }

@@ -168,9 +168,8 @@
                                     <th>Total</th>
                                     </thead>
                                     <tbody>
+                                    <?php $Total_price = 0; ?>
                                     @if(session()->has('cart'))
-                                        <?php $Total_price = 0; ?>
-
                                         @foreach(session()->get('cart') as $item)
                                             <?php
                                             $Total_price = $Total_price + ($item['quantity'] * $item['drug']->price);

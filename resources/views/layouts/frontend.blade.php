@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/owl.theme.default.min.css') }}">
 
-
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/toastr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/aos.css') }}">
 
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
@@ -62,13 +62,54 @@
                                     href="{{ route('home') }}">Home</a></li>
                             <li class="{{ Str::endsWith(Route::currentRouteName(), 'shop') ? 'active':'' }}"><a
                                     href="{{ route('shop') }}">Store</a></li>
-                            <li class=" {{ Str::endsWith(Route::currentRouteName(), 'login') ? 'active':'' }} has-children">
-                                <a href="#">Full Access </a>
-                                <ul class="dropdown">
-                                    <li><a href="{{ route('login') }}">Login</a></li>
-                                    <li><a href="{{ route('register') }}">Register</a></li>
-                                </ul>
-                            </li>
+                            @guest
+                                <li class=" {{ Str::endsWith(Route::currentRouteName(), 'login') ? 'active':'' }} has-children">
+                                    <a href="#">Full Access </a>
+                                    <ul class="dropdown">
+                                        <li><a href="{{ route('login') }}">Login</a></li>
+                                        <li><a href="{{ route('register') }}">Register</a></li>
+                                    </ul>
+                                </li>
+                            @endguest
+                            @if(Auth::check() && Auth::user()->role_id===1)
+                                <li class=" {{ Str::endsWith(Route::currentRouteName(), 'drugs') ? 'active':'' }} has-children">
+                                    <a href="#">Drugs</a>
+                                    <ul class="dropdown">
+                                        <li><a href="{{ route('pharma.drugs.index') }}">List</a></li>
+                                        <li><a href="{{ route('pharma.drugs.create') }}">New</a></li>
+                                    </ul>
+                                </li>
+                                <li class=" {{ Str::endsWith(Route::currentRouteName(), 'orders') ? 'active':'' }} has-children">
+                                    <a href="#">Order</a>
+                                    <ul class="dropdown">
+                                        <li><a href="{{ route('pharma.orders.index') }}">All</a></li>
+                                        <li><a href="{{ route('pharma.orders.create') }}">Pending</a></li>
+                                    </ul>
+                                </li>
+                            @elseif(Auth::check())
+                                <li class=" {{ Str::endsWith(Route::currentRouteName(), 'orders') ? 'active':'' }} has-children">
+                                    <a href="#">My Order </a>
+                                    <ul class="dropdown">
+                                        <li><a href="{{ route('customer.orders.index') }}">All</a></li>
+                                        <li><a href="{{ route('customer.orders.create') }}">Supplier</a></li>
+                                        <li><a href="{{ route('customer.orders.edit','pending') }}">Pending</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="has-children">
+                                    <a href="#">{{ Auth::user()->name }} </a>
+                                    <ul class="dropdown">
+                                        <li><a
+                                                onclick="event.preventDefault();
+                                                document.getElementById('form-logout').submit()">
+                                                Log-Out</a>
+                                        </li>
+                                        <form id="form-logout" action="{{ route('logout') }}" method="post">
+                                            @csrf
+                                        </form>
+                                    </ul>
+                                </li>
+                            @endif
                             <li class="{{ Str::endsWith(Route::currentRouteName(), 'about') ? 'active':'' }}"><a
                                     href="{{ route('about') }}">About</a></li>
                             <li class="{{ Str::endsWith(Route::currentRouteName(), 'contact') ? 'active':'' }}"><a
@@ -152,5 +193,23 @@
 
 <script src="{{ asset('frontend/js/main.js') }}"></script>
 
+<script src="{{ asset('js/toastr.min.js') }}"></script>
+
+<script src="{{ asset("js/datatables/jquery.dataTables.min.js")}}"></script>
+<script src="{{ asset("js/datatables/dataTables.bootstrap4.min.js")}}"></script>
+{!! Toastr::message() !!}
+<script>
+    @if ($errors->any())
+    @foreach ($errors->all() as $error)
+    toastr.error('{{ $error }}', 'Error', {
+        closeButton: true,
+        progressBar: true,
+        showDuration: 500,
+        positionClass: "toast-bottom-right",
+    });
+    @endforeach
+    @endif
+</script>
+@yield('script')
 </body>
 </html>

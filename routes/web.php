@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\FrontendController::class, 'index'])->name('home');
+Route::get('/home', [\App\Http\Controllers\FrontendController::class, 'index'])->name('home');
+Route::get('/', [\App\Http\Controllers\FrontendController::class, 'index']);
 Route::get('shop', [\App\Http\Controllers\FrontendController::class, 'shop'])->name('shop');
 Route::get('shop/{slug}', [\App\Http\Controllers\FrontendController::class, 'show'])->name('shop.show');
 Route::get('about', [\App\Http\Controllers\FrontendController::class, 'about'])->name('about');
@@ -26,4 +27,22 @@ Route::get('remove-to/cart/{slug}', [\App\Http\Controllers\FrontendController::c
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+Route::group([
+    'prefix' => 'pharma',
+    'middleware' => ['auth', 'pharma'],
+    'namespace' => 'App\Http\Controllers\Pharma',
+    'as' => 'pharma.'],
+    function () {
+        Route::resource('drugs', 'DrugController');
+        Route::resource('orders', 'OrderController');
+    });
+
+Route::group([
+    'prefix' => 'customer',
+    'middleware' => ['auth', 'customer'],
+    'namespace' => 'App\Http\Controllers\Customer',
+    'as' => 'customer.'],
+    function () {
+        Route::resource('orders', 'orderController');
+    });
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');

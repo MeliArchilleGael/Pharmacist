@@ -7,6 +7,7 @@ use App\Models\Command;
 use App\Models\Drugs;
 use App\Models\Order;
 use App\Models\User;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -59,6 +60,13 @@ class FrontendController extends Controller
         // dd($request->all());
         $user = null;
         $command = null;
+        $cart_items = session('cart');
+
+        if (!session()->has('cart')) {
+            Toastr::info('message', 'Empty Cart');
+            return redirect()->route('shop');
+        }
+
         if (Auth::check()) {
             $user = Auth::user();
             if ($request->has('c_diff')) {
@@ -84,8 +92,8 @@ class FrontendController extends Controller
                 'email' => $user->email,
                 'telephone' => $user->telephone,
                 'address' => $user->address,
-                'user_id'=>Auth::user()->id,
-                'note'=>$request->c_order_notes,
+                'user_id' => Auth::user()->id,
+                'note' => $request->c_order_notes,
             ]);
         } else {
             $request->validate([
@@ -131,34 +139,36 @@ class FrontendController extends Controller
                     'email' => $user->email,
                     'telephone' => $user->telephone,
                     'address' => $user->address,
-                    'note'=>$request->c_order_notes,
+                    'note' => $request->c_order_notes,
                 ]);
-            }else{
+            } else {
                 $command = Command::create([
                     'status' => 'Pending',
-                    'name' => $request->c_fname .' '.$request->c_lname,
+                    'name' => $request->c_fname . ' ' . $request->c_lname,
                     'email' => $request->c_email_address,
                     'telephone' => $request->c_phone,
                     'address' => $request->c_address,
-                    'note'=>$request->c_order_notes,
+                    'note' => $request->c_order_notes,
                 ]);
             }
         }
-        $cart_items = session('cart');
-        foreach ($cart_items as $item){
+        $total_price = 0;
+        foreach ($cart_items as $item) {
             $item_price = $item['drug']->price;
             $item_qty = $item['quantity'];
             $price = $item_qty * $item_price;
 
+            $total_price += $price;
             Order::create([
-                'drug_id'=>$item['drug']->id,
-                'quantity'=>$item['quantity'],
-                'command_id'=>$command->id,
-                'price'=>$price,
+                'drug_id' => $item['drug']->id,
+                'quantity' => $item['quantity'],
+                'command_id' => $command->id,
+                'price' => $price,
             ]);
         }
-       session()->pull('cart');
-        // Toastr::success('message', 'Order post succesfully');
+        $command->update(['price'=>$total_price]);
+        session()->pull('cart');
+        Toastr::success('message', 'Order post succesfully');
         return view('frontend.thanks');
     }
 
@@ -196,16 +206,16 @@ class FrontendController extends Controller
                 ]
             ];
             session()->put('cart', $cart);
-            // Toastr::success('message', 'Product added to cart successfully');
-            return back();
+            Toastr::success('message', 'Drugs added to cart successfully');
+            return redirect()->route('shop');
         }
 
         // if cart not empty then check if this product exist then increment quantity
         if (isset($cart[$slug])) {
             $cart[$slug]['quantity'] = $cart[$slug]['quantity'] + $request->input('quantity');
             session()->put('cart', $cart);
-            // Toastr::success('message', 'Product added to cart successfully');
-            return back();
+            Toastr::success('message', 'Drugs added to cart successfully');
+            return redirect()->route('shop');
         }
 
         // if item not exist in cart add to cart
@@ -214,8 +224,8 @@ class FrontendController extends Controller
             'quantity' => $request->input('quantity'),
         ];
         session()->put('cart', $cart);
-        // Toastr::success('message', 'Product added to cart successfully');
-        return redirect()->back();
+        Toastr::success('message', 'Drugs added to cart successfully');
+        return redirect()->route('shop');
     }
 
     /**
@@ -225,8 +235,10 @@ class FrontendController extends Controller
     {
         if (session()->has('cart')) {
             session()->pull('cart');
+            Toastr::success('message', 'Cart clear successfully');
             return back();
         } else {
+            Toastr::info('message', 'Empty Cart');
             return back();
         }
     }
@@ -243,6 +255,7 @@ class FrontendController extends Controller
                 session()->put('cart', $cart);
             }
         }
+        Toastr::info('message', 'Drug remove from the Cart successfully');
         return back();
     }
 

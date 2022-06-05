@@ -10,7 +10,7 @@
                         <h1>Welcome To Online Pharma</h1>
                         <h2 class="sub-title">Your online Pharmacist management system</h2>
                         <p>
-                            <a href="#" class="btn btn-primary px-5 py-3">Shop Now</a>
+                            <a href="{{ route('shop') }}" class="btn btn-primary px-5 py-3">Shop Now</a>
                         </p>
                     </div>
                 </div>
@@ -106,7 +106,7 @@
     </div>
 
 
-    <div class="site-section bg-secondary bg-image" style="background-image: url('frontend/images/bg_2.jpg');">
+    {{--<div class="site-section bg-secondary bg-image" style="background-image: url('frontend/images/bg_2.jpg');">
         <div class="container">
             <div class="row align-items-stretch">
                 <div class="col-lg-6 mb-5 mb-lg-0">
@@ -129,5 +129,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--}}
 @endsection

@@ -54,7 +54,8 @@
                                                         &minus;
                                                     </button>
                                                 </div>
-                                                <input type="text" class="form-control text-center" value="{{ $item['quantity'] }}"
+                                                <input type="text" class="form-control text-center"
+                                                       value="{{ $item['quantity'] }}"
                                                        placeholder=""
                                                        aria-label="Example text with button addon"
                                                        aria-describedby="button-addon1">
@@ -105,14 +106,16 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <button class="btn btn-primary btn-lg btn-block"
-                                            onclick="window.location='{{ route('checkout') }}'">
-                                        Proceed To Checkout
-                                    </button>
+                            @if($Total_price)
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button class="btn btn-primary btn-lg btn-block"
+                                                onclick="window.location='{{ route('checkout') }}'">
+                                            Proceed To Checkout
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
